@@ -4,25 +4,10 @@ from step1_excelreader import load_excel, get_delomrade
 from step2_chatbot import (
     get_konstruktiv_mapping,
     get_type_mappings,
-    get_model_types
+    get_model_types,
+    get_teknikomrade_mapping,
+    ENTREPRENAD_LIST
 )
-
-VALID_TEKNIKOMRADEN = ["c", "a", "A"]
-
-ENTREPRENAD_LIST = [
-    "E00","E01","E02","E03","E04","E05","E06","E06A","E06B",
-    "E08","E09","E10","E11","E12","E13","E14","E15",
-    "EB02","EB03","EB04","EB05","EB06","EB07","EB08",
-    "FA36","FA37","FU.E06","IBTL01","JPSHFU01","JPSHFU02",
-    "SE02","SE03","SE05","SE08","SE16","SE17","SE18","SE19",
-    "SE20","SE21","SE22","SPD","TRV","TSB01","UM02","UM03",
-    "JPSHFU03","SE23","SE24","SE25","BUP08","BUP09","SE26","SE27",
-    "A001","BBP01","BBP03","BBP04","BBP05","BBS01","BBT01",
-    "BEF01","BIK01","BIK02","BPU01","BTH01","BTH02","BTH03",
-    "BTH04","BTH05","BTH06","BU01","BU02","BU03","BUA01",
-    "BUB01","BUF02","BUU01","BUK02","BUP01","BUP03","BUP04","BUP06",
-    "FA28.1","FA28.2","FA14.2"
-]
 
 
 @st.cache_data
@@ -33,8 +18,9 @@ def load_all_data():
     dokument_map, ritning_map = get_type_mappings(data)
     modell_map = get_model_types(data)
     delomrade_list = get_delomrade(data)
+    teknik_map = get_teknikomrade_mapping(data)
 
-    return konstruktiv_map, dokument_map, ritning_map, modell_map, delomrade_list
+    return konstruktiv_map, dokument_map, ritning_map, modell_map, delomrade_list, teknik_map
 
 
 def main():
@@ -48,12 +34,13 @@ def main():
         dokument_map,
         ritning_map,
         modell_map,
-        delomrade_list
+        delomrade_list,
+        teknik_map
     ) = load_all_data()
 
     typ = st.selectbox(
         "Typ av handling",
-        ["document", "drawing", "model"]
+        ["Dokument", "Ritning", "Modell"]
     )
 
     entreprenad = st.selectbox(
@@ -61,52 +48,61 @@ def main():
         ENTREPRENAD_LIST
     )
 
-    teknik = st.selectbox(
-        "Teknikområde",
-        VALID_TEKNIKOMRADEN
-    )
-
-    delomrade = st.selectbox(
-        "Delområde",
-        delomrade_list
-    )
-
-    lopnummer = st.text_input("Löpnummer (4 digits)")
+    teknik_display = list(teknik_map.keys())
+    selected_teknik = st.selectbox("Teknikområde", teknik_display)
+    teknik = teknik_map[selected_teknik]
 
     val = None
 
-    if typ == "document":
-        dokument_keys = sorted(dokument_map.keys())
+    if typ == "Dokument":
+        reverse_doc_map = {v: k for k, v in dokument_map.items()}
 
-        selected = st.selectbox(
-            "Dokumenttyp",
-            dokument_keys
-        )
+        dokument_display = [
+            f"{code} - {reverse_doc_map[code]}"
+            for code in sorted(reverse_doc_map.keys())
+        ]
 
-        if selected:
-            val = dokument_map[selected]
-
-    elif typ == "drawing":
-        ritning_keys = sorted(ritning_map.keys())
-
-        selected = st.selectbox(
-            "Ritningstyp",
-            ritning_keys
-        )
+        selected = st.selectbox("Dokumenttyp", dokument_display)
 
         if selected:
-            val = ritning_map[selected]
+            val = selected.split(" - ")[0]
 
-    elif typ == "model":
-        model_keys = sorted(set(modell_map.keys()))
+    elif typ == "Ritning":
+        reverse_ritning_map = {v: k for k, v in ritning_map.items()}
 
-        selected = st.selectbox(
-            "Modelltyp",
-            model_keys
-        )
+        ritning_display = [
+            f"{code} - {reverse_ritning_map[code]}"
+            for code in sorted(reverse_ritning_map.keys())
+        ]
+
+        selected = st.selectbox("Ritningstyp", ritning_display)
 
         if selected:
-            val = modell_map[selected]
+            val = selected.split(" - ")[0]
+
+    elif typ == "Modell":
+        reverse_model_map = {v: k for k, v in modell_map.items()}
+
+        model_display = [
+            f"{code} - {reverse_model_map[code]}"
+            for code in sorted(reverse_model_map.keys())
+        ]
+
+        selected = st.selectbox("Modelltyp", model_display)
+
+        if selected:
+            val = selected.split(" - ")[0]
+
+    delomrade_display = list(delomrade_list.keys())
+
+    selected_delomrade = st.selectbox(
+        "Delområde",
+        delomrade_display
+    )
+
+    delomrade = delomrade_list[selected_delomrade]
+
+    lopnummer = st.text_input("Löpnummer (4 digits)")
 
     if st.button("Generate filename"):
         if not lopnummer.isdigit() or len(lopnummer) != 4:
