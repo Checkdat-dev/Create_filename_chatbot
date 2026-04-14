@@ -8,7 +8,7 @@ def load_excel(file_path):
 
 def convert_to_chunks(data):
     chunks = []
-
+    
     for sheet_name, df in data.items():
         text = df.fillna("").astype(str).to_string(index=False)
         chunk = f"Sheet: {sheet_name}\n{text}"
