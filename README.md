@@ -24,7 +24,7 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 
 ---
 
-## 🧠 How It Works (Simple View)
+##  How It Works (Simple View)
 
 1. Open the app
 2. Choose the format (Excel or PDF)
@@ -36,9 +36,9 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 ---
 
 
-## ⚠️ Important Notes
+##  Important Notes
 
-### 💤 App Sleeping
+###  App Sleeping
 
 * If app does not open immediately
   👉 Wait **10–30 seconds**
@@ -56,7 +56,7 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 
 ---
 
-#£ 🎯 Purpose
+## Purpose
 
 This project demonstrates:
 
