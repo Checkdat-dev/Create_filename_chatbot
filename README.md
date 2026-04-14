@@ -1,19 +1,17 @@
-# Create_filename_chatbot
-
 # Filename Generator App (Excel + PDF)
 
 A user-friendly application that automatically generates correct filenames based on structured company rules.
 
 ---
 
-#  Live Application
+##  Live Application
 
 👉 **Try the app here:**
 https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 
 ---
 
-#  Key Features
+##  Key Features
 
 * ✅ Supports **two company formats**
 
@@ -26,7 +24,7 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 
 ---
 
-# 🧠 How It Works (Simple View)
+## 🧠 How It Works (Simple View)
 
 1. Open the app
 2. Choose the format (Excel or PDF)
@@ -38,7 +36,7 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 ---
 
 
-# ⚠️ Important Notes
+## ⚠️ Important Notes
 
 ### 💤 App Sleeping
 
@@ -49,7 +47,7 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 ---
 
 
-# 🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 * Python
 * Streamlit
@@ -58,7 +56,7 @@ https://createfilenamechatbot-phkdyhzd5gtjzb9c2ekuxl.streamlit.app/
 
 ---
 
-# 🎯 Purpose
+#£ 🎯 Purpose
 
 This project demonstrates:
 
